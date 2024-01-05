@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function ProjectSpotlight() {
+export default function ProjectSpotlight(props) {
   
   let pagesLink;
   let coAuthorList;
