@@ -1,18 +1,18 @@
 import React from "react";
 
-export default function Portfolio {
+export default function Portfolio() {
   return (
     <React.Fragment>
       <div class="navBar">
         <img class="name" src="img/name.png" alt="Aaron Mejia name" />
-      <div>
-      <img class="profilePic" src="img/aaron.jpg" alt="picture of Aaron sitting on beach watching sunset" />
-    </div>
-    <br class="wideViewOnly" /><br class="wideViewOnly" />
-    <button type="button" class="expandSection" id="firstNavSection">About</button>
-    <div class="aboutMe-Section">
-      <p>Hello!<br />I am an up-and-coming developer in the Portland metro area. I come from a background of 5 years in IT, managing the maintenance of large networks, training of technicians, and creation/documentation of processes. Programming excites me and I <em>love</em> helping individuals further themselves and their businesses through technology. I am currently enrolled in <span style="font-weight: bolder"><a href="https://epicodus.com" target="_blank">Epicodus</a></span> to help achieve this goal.<br />I'm excited to work with you!</p>
-    </div>
+        <div>
+          <img class="profilePic" src="img/aaron.jpg" alt="picture of Aaron sitting on beach watching sunset" />
+        </div>
+        <br class="wideViewOnly" /><br class="wideViewOnly" />
+        <button type="button" class="expandSection" id="firstNavSection">About</button>
+        <div class="aboutMe-Section">
+          <p>Hello!<br />I am an up-and-coming developer in the Portland metro area. I come from a background of 5 years in IT, managing the maintenance of large networks, training of technicians, and creation/documentation of processes. Programming excites me and I <em>love</em> helping individuals further themselves and their businesses through technology. I am currently enrolled in <span ><a href="https://epicodus.com" target="_blank">Epicodus</a></span> to help achieve this goal.<br />I'm excited to work with you!</p>
+        </div>
     <br class="wideViewOnly" />
     <button type="button" class="expandSection">Skills & Interests</button>
     <div class="aboutMe-Section">
@@ -21,7 +21,7 @@ export default function Portfolio {
         <li>I have built fully-functioning web servers from scratch on Linux using LAMP stacks and WordPress</li>
       </ul>
     </div>
-    <br class="wideViewOnly">
+    <br class="wideViewOnly" />
     <button type="button" class="expandSection">Contact</button>
     <div class="aboutMe-Section">
       <p>Let's get in touch!</p>
@@ -109,25 +109,6 @@ export default function Portfolio {
     </div>
 
   </div>
-
-  {/* <script>
-    var coll = document.getElementsByClassName("expandSection");
-    var i;
-
-    for (i = 0; i < coll.length; i++) {
-      coll[i].addEventListener("click", function () {
-        this.classList.toggle("active");
-        var content = this.nextElementSibling;
-        if (content.style.maxHeight) {
-          content.style.maxHeight = null;
-        } else {
-          content.style.maxHeight = content.scrollHeight + "px";
-        }
-      });
-    }
-
-
-  </script> */}
     </React.Fragment>
   )
 }
