@@ -6,7 +6,7 @@ export default function ProjectsList(props) {
   return (
     <React.Fragment>
       <div className="projectSpotlight-Wrapper">
-        {Object.values(props.projectList).map((project) =>
+        {Object.values(props.projectList).map((project, index) =>
           <ProjectSpotlight
             title={project.title}
             desc={project.desc}
@@ -15,6 +15,7 @@ export default function ProjectsList(props) {
             techsUsed={project.techsUsed}
             features={project.features}
             coAuthors={project.coAuthors}
+            key={index}
           />
         )}
       </div>
@@ -23,5 +24,5 @@ export default function ProjectsList(props) {
 }
 
 ProjectsList.propTypes = {
-  projectList: PropTypes.object
+  projectList: PropTypes.array
 }
