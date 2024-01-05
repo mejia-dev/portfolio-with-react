@@ -1,5 +1,7 @@
-import React from "react";
-import '../styles/Portfolio.css'
+import React from 'react';
+import '../styles/Portfolio.css';
+import profilePic from '../img/aaron.jpg';
+import nameWordArt from '../img/name.png'
 
 export default function Portfolio() {
 
@@ -16,9 +18,9 @@ export default function Portfolio() {
   return (
     <React.Fragment>
       <div className="navBar">
-        <img className="name" src="img/name.png" alt="Aaron Mejia name" />
+        <img className="name" src={nameWordArt} alt="Aaron Mejia name" />
         <div>
-          <img className="profilePic" src="img/aaron.jpg" alt="picture of Aaron sitting on beach watching sunset" />
+          <img className="profilePic" src={profilePic} alt="picture of Aaron sitting on beach watching sunset" />
         </div>
         <br className="wideViewOnly" /><br className="wideViewOnly" />
         <button type="button" className="expandSection" id="firstNavSection" onClick={() => expandNavBarItem("firstNavSection")}>About</button>
