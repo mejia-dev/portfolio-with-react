@@ -10,22 +10,43 @@ export default function Portfolio() {
   // const [projectsList, setProjectsList] = useState([]);
 
   let projectsList = [
-      {
-        title: "Island Resort Website",
-        desc: "This project was created as an example for a website that could be used by an island resort company.",
-        linkRepo: "https://github.com/mejia-dev/sample-island-resort-website",
-        techsUsed: ["HTML","CSS"],
-        features: ["Welcome/Home Page","Activities Page","Contact Page","Accommodations Page"],
-      },
-      {
-        title: "Blogging Site",
-        desc: "An example of a blogging site created by a classNamemate and I. I styled the CSS on the 'About' page.",
-        linkRepo: "https://github.com/mejia-dev/blogging-site",
-        techsUsed: ["HTML","CSS"],
-        features: ["Home/Blog Page","About Page","Floated images on the About page"],
-        coAuthors: ["https://github.com/daisyorozcob"]
-      },
-    ]
+    {
+      title: "Burlap Coffee Co. Inventory Tracker with Redux",
+      desc: "This project acts as a functional inventory tracker for a coffee company.",
+      linkRepo: "https://github.com/mejia-dev/burlap-coffee-with-redux",
+      linkPages: "https://mejia-dev.github.io/burlap-coffee-with-redux",
+      techsUsed: [
+        "ReactJS",
+        "Redux",
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "webpack",
+        "npm",
+        "Jest",
+        "ESLint",
+        "Babel",
+        "Dotenv",
+      ],
+      features: ["Allows users to add, view, edit, and delete inventory levels of coffee beans.", "Displays warnings if stock is getting low."],
+    },
+    {
+      title: "Epicrust Pizza Parlor",
+      desc: "A simple website to create and order pizzas from the best pizza place in town!",
+      linkRepo: "https://github.com/mejia-dev/pizza-parlor",
+      linkPages: "https://mejia-dev.github.io/pizza-parlor",
+      techsUsed: ["JavaScript","HTML", "CSS"],
+      features: ["Functional order menu", "Functional cart with Create, Read, Update, Delete functionality"],
+    },
+    {
+      title: "Mr. Roboger's Neighborhood",
+      desc: "This webpage is a counting page. Input a number, then a list of numbers counting up (or down) to that number will be displayed. Some numbers will be replaced, according to the defined rules (see Features section).",
+      linkRepo: "https://github.com/mejia-dev/mr-robogers-neighborhood",
+      linkPages: "https://mejia-dev.github.io/mr-robogers-neighborhood",
+      techsUsed: ["JavaScript","HTML", "CSS"],
+      features: [`For numbers that contain a 3, all digits are replaced with "Won't you be my neighbor?"`,'For numbers that contain a 2, all digits are replaced with "Boop!"','For numbers that contain a 1, all digits are replaced with "Beep!"'],
+    },
+  ]
 
   function expandNavBarItem(elementId) {
     document.getElementById(elementId).classList.toggle("active");
@@ -71,86 +92,7 @@ export default function Portfolio() {
 
       <ProjectsList
         projectList={projectsList}
-        />
-
-      
-
-      {/* <div className="projectSpotlight-Wrapper">
-        <div className="projectSpotlight-Project">
-          <h2>Island Resort Website</h2>
-          <p>This project was created as an example for a website that could be used by an island resort company.</p>
-          <p className="gitHubLink">GitHub Link: <a href="https://github.com/mejia-dev/sample-island-resort-website">github.com/mejia-dev/sample-island-resort-website</a></p>
-          <img src="img/sample-island-resort.png" alt="screenshot of Island Resort website" />
-          <h3>Languages Used:</h3>
-          <ol>
-            <li>HTML</li>
-            <li>CSS</li>
-          </ol>
-          <h3>Features:</h3>
-          <ul>
-            <li>Welcome/Home Page</li>
-            <li>Activities Page</li>
-            <li>Contact Page</li>
-            <li>Accommodations Page</li>
-          </ul>
-          <h3>Authors:</h3>
-          <ul>
-            <li><a href="https://github.com/mejia-dev">mejia-dev (me)</a></li>
-          </ul>
-        </div>
-
-        <br /><br />
-
-        <div className="projectSpotlight-Project">
-          <h2>Blogging Site</h2>
-          <p>An example of a blogging site created by a classNamemate and I. I styled the CSS on the "About" page.</p>
-          <p className="gitHubLink">GitHub Link: <a href="https://github.com/mejia-dev/blogging-site">github.com/mejia-dev/blogging-site</a></p>
-          <img src="img/sample-blogging-site.png" alt="screenshot of Blogging website" />
-          <h3>Languages Used:</h3>
-          <ol>
-            <li>HTML</li>
-            <li>CSS</li>
-          </ol>
-          <h3>Features:</h3>
-          <ul>
-            <li>Home/Blog Page</li>
-            <li>About Page</li>
-            <li>Floated images on the About page</li>
-          </ul>
-          <h3>Authors:</h3>
-          <ul>
-            <li><a href="https://github.com/mejia-dev">mejia-dev (me)</a></li>
-            <li><a href="https://github.com/daisyorozcob">daisyorozcob</a></li>
-          </ul>
-        </div>
-
-        <br /><br />
-
-        <div className="projectSpotlight-Project">
-          <h2>Resume Website</h2>
-          <p>A resume template recreated for the web by a classNamemate and I.</p>
-          <p className="gitHubLink">GitHub Link: <a href="https://github.com/daisyorozcob/resume-site">github.com/daisyorozcob/resume-site</a></p>
-          <img src="img/sample-resume-site.png" alt="screenshot of Resume website" />
-          <h3>Languages Used:</h3>
-          <ol>
-            <li>HTML</li>
-            <li>CSS</li>
-          </ol>
-          <h3>Features:</h3>
-          <ul>
-            <li>Welcome/Home Page</li>
-            <li>Activities Page</li>
-            <li>Contact Page</li>
-            <li>Accommodations Page</li>
-          </ul>
-          <h3>Authors:</h3>
-          <ul>
-            <li><a href="https://github.com/daisyorozcob">daisyorozcob</a></li>
-            <li><a href="https://github.com/mejia-dev">mejia-dev (me)</a></li>
-          </ul>
-        </div>
-
-      </div> */}
+      />
     </React.Fragment>
   )
 }
