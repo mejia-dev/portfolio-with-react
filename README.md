@@ -15,7 +15,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 * JavaScript
 * webpack
 * npm
-* Jest
 * ESLint
 * Babel
 
