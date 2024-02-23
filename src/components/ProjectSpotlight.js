@@ -21,11 +21,6 @@ export default function ProjectSpotlight(props) {
         return response.json();
       })
       .then((jsonObj) => {
-        console.log("Made it here");
-        // jsonObj.response.forEach(element => {
-        //   console.log(element);
-        // });
-        // console.log(jsonObj.response);
         setGhPagesLink("https://mejia-dev.github.io/"+ props.title);
         setGhPagesLinkLoaded(true);
       })
@@ -36,7 +31,6 @@ export default function ProjectSpotlight(props) {
   }, [])
 
   if (ghPagesLink != null) {
-    // pagesLink = <p className="pagesLink">GH Pages Link: <a href={props.linkPages}>{props.linkPages.slice(8)}</a></p>
     pagesLink = (
       <p className="pagesLink">Live Link: <a href={ghPagesLink} target="_blank" rel="noreferrer">{ghPagesLink.slice(8)}</a></p>
     )
