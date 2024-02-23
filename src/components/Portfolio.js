@@ -9,19 +9,22 @@ export default function Portfolio() {
 
   const [projectsListLoaded, setProjectsListLoaded] = useState(false);
   const [projectsList, setProjectsList] = useState([]);
-  const [projectsListApiHasErrored, setProjectsListApiHasErrored] = useState(false);
   const [projectsListApiErrorMsg, setProjectsListApiErrorMsg] = useState(null);
 
   useEffect(() => {
-    fetch("https://gh-pinned-repos-api.ysnirix.xyz/api/gets?username=mejia-dev")
-      .then(response => response.json())
+    fetch("https://gh-pinned-repos-api.ysnirix.xyz/api/get?username=mejia-dev")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status}`);
+        }
+        return response.json();
+      })
       .then((jsonObj) => {
         setProjectsList(jsonObj.response);
         setProjectsListLoaded(true);
       })
       .catch((error) => {
         setProjectsListApiErrorMsg(error);
-        setProjectsListApiHasErrored(true);
         setProjectsListLoaded(true);
       });
   }, [])
@@ -76,24 +79,22 @@ export default function Portfolio() {
   }
 
   let projectsRendering;
-  // if (!projectsListLoaded) {
-  //   projectsRendering = (
-  //     <h1>Loading, please wait...</h1>
-  //   )
-  // } else if (projectsListApiHasErrored === true) {
-  //   console.log(projectsListApiErrorMsg);
-  //   projectsRendering = (
-  //     <h1>Error while getting results. Please visit <a href="https://github.com/mejia-dev" target="_blank" rel="noreferrer">github.com/mejia-dev</a> to view current projects.</h1>
-  //   )
-  // } else 
-  if (projectsListLoaded && (projectsListApiHasErrored === false)) {
+  if (!projectsListLoaded) {
+    projectsRendering = (
+      <div className="projectSpotlight-Wrapper"><p className="apiMessage">Loading data from GitHub, please wait...</p></div>
+    )
+  } else if (projectsListApiErrorMsg != null) {
+    console.log(projectsListApiErrorMsg);
+    projectsRendering = (
+      <div className="projectSpotlight-Wrapper"><h3 className="apiMessage">Error while getting current projects list. {projectsListApiErrorMsg.message} <br />Please visit <a href="https://github.com/mejia-dev" target="_blank" rel="noreferrer">github.com/mejia-dev</a> to view current projects.</h3></div>
+    )
+  } else {
     projectsRendering = (
       <ProjectsList
         projectList={projectsList}
       />
     )
   }
-
 
   return (
     <React.Fragment>
