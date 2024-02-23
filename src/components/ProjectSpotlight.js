@@ -4,20 +4,29 @@ import PropTypes from 'prop-types';
 export default function ProjectSpotlight(props) {
 
   let pagesLink;
-  let coAuthorList;
+  let starsCount;
+  let forksCount;
+
   if (props.linkPages) {
     pagesLink = <p className="pagesLink">GH Pages Link: <a href={props.linkPages}>{props.linkPages.slice(8)}</a></p>
   }
-  if (props.coAuthors) {
-    coAuthorList =
-      <React.Fragment>
-        <h3>Co-Authors:</h3>
-        <ul>
-          {props.coAuthors.map((author, index) =>
-            <li key={index}><a href={author}>{author.slice(19)}</a></li>
-          )}
-        </ul>
-      </React.Fragment>
+  if (props.stars >= 1) {
+    starsCount = (
+      <span>Stars: ⭐{props.stars}</span>
+    )
+      // <React.Fragment>
+      //   <h3>Co-Authors:</h3>
+      //   <ul>
+      //     {props.coAuthors.map((author, index) =>
+      //       <li key={index}><a href={author}>{author.slice(19)}</a></li>
+      //     )}
+      //   </ul>
+      // </React.Fragment>
+  }
+  if (props.forks >= 1) {
+    forksCount = (
+      <span>🍴 {props.forks}</span>
+    )
   }
 
   return (
@@ -26,19 +35,24 @@ export default function ProjectSpotlight(props) {
       <p>{props.desc}</p>
       <p className="repoLink">GitHub Link: <a href={props.linkRepo} target="_blank" rel="noreferrer">{props.linkRepo.slice(8)}</a></p>
       {pagesLink}
-      <h3>Technologies Used:</h3>
+      {/* <h3>Primary Technology: </h3> */}
       {/* <ol>
-        {props.techsUsed.map((tech, index) =>
-          <li key={props.title + tech + index}>{tech}</li>
+        {Object.values(props.techsUsed).map((tech, color) =>
+          <li >{tech}</li>
         )}
       </ol> */}
-      <h3>Features:</h3>
+
+      {/* <h3>Details:</h3> */}
       {/* <ul>
         {props.features.map((feature, index) =>
           <li key={index}>{feature}</li>
         )}
       </ul> */}
-      {coAuthorList}
+      Technology: <span style={{color: `${props.techsUsed.color}`}}><svg height="100" width="100" xmlns="http://www.w3.org/2000/svg">
+  <circle r="45" cx="50" cy="50" fill={props.techsUsed.color} />
+</svg>{props.techsUsed.name}</span><br />
+      {starsCount}<br />
+      {forksCount}<br />
     </div>
   )
 }
@@ -48,7 +62,7 @@ ProjectSpotlight.propTypes = {
   desc: PropTypes.string,
   linkRepo: PropTypes.string,
   linkPages: PropTypes.string,
-  techsUsed: PropTypes.array,
-  features: PropTypes.array,
-  coAuthors: PropTypes.array
+  techsUsed: PropTypes.object,
+  stars: PropTypes.number,
+  forks: PropTypes.number
 }

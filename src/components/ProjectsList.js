@@ -12,9 +12,9 @@ export default function ProjectsList(props) {
             desc={project.description}
             linkRepo={project.repo}
             // linkPages={project.linkPages}
-            // techsUsed={project.language}
-            // features={project.features}
-            // coAuthors={project.coAuthors}
+            techsUsed={project.language}
+            stars={project.stars}
+            forks={project.forks}
             key={index}
           />
         )}
