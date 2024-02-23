@@ -1,13 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 export default function ProjectSpotlight(props) {
+
+  const [ghPagesLinkLoaded, setGhPagesLinkLoaded] = useState(false);
+  const [ghPagesLink, setGhPagesLink] = useState(null);
+  const [ghPagesLinkError, setGhPagesLinkError] = useState(null);
 
   let pagesLink;
   let starsCount;
   let forksCount;
 
-  if (props.linkPages) {
+  useEffect(() => {
+    fetch("https://api.github.com/repos/mejia-dev/"+ props.title + "/branches")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((jsonObj) => {
+        setGhPagesLink(jsonObj.response);
+        setGhPagesLinkLoaded(true);
+      })
+      .catch((error) => {
+        setGhPagesLinkError(error);
+        setGhPagesLinkLoaded(true);
+      });
+  }, [])
+
+  if (ghPagesLink !=null) {
     pagesLink = <p className="pagesLink">GH Pages Link: <a href={props.linkPages}>{props.linkPages.slice(8)}</a></p>
   }
   if (props.stars >= 1) {
@@ -55,7 +77,6 @@ ProjectSpotlight.propTypes = {
   title: PropTypes.string,
   desc: PropTypes.string,
   linkRepo: PropTypes.string,
-  linkPages: PropTypes.string,
   techsUsed: PropTypes.object,
   stars: PropTypes.number,
   forks: PropTypes.number

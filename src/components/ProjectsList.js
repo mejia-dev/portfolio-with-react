@@ -11,7 +11,6 @@ export default function ProjectsList(props) {
             title={project.name}
             desc={project.description}
             linkRepo={project.repo}
-            // linkPages={project.linkPages}
             techsUsed={project.language}
             stars={project.stars}
             forks={project.forks}
