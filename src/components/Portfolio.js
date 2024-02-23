@@ -9,17 +9,19 @@ export default function Portfolio() {
 
   const [projectsListLoaded, setProjectsListLoaded] = useState(false);
   const [projectsList, setProjectsList] = useState([]);
-  const [projectsListApiError, setProjectsListApiError] = useState(null);
+  const [projectsListApiHasErrored, setProjectsListApiHasErrored] = useState(false);
+  const [projectsListApiErrorMsg, setProjectsListApiErrorMsg] = useState(null);
 
   useEffect(() => {
-    fetch("https://gh-pinned-repos-api.ysnirix.xyz/api/get?username=mejia-dev")
+    fetch("https://gh-pinned-repos-api.ysnirix.xyz/api/gets?username=mejia-dev")
       .then(response => response.json())
       .then((jsonObj) => {
         setProjectsList(jsonObj.response);
         setProjectsListLoaded(true);
       })
       .catch((error) => {
-        setProjectsListApiError(error);
+        setProjectsListApiErrorMsg(error);
+        setProjectsListApiHasErrored(true);
         setProjectsListLoaded(true);
       });
   }, [])
@@ -74,15 +76,17 @@ export default function Portfolio() {
   }
 
   let projectsRendering;
-  if (!projectsListLoaded) {
-    projectsRendering = (
-      <h1>Loading, please wait...</h1>
-    )
-  } else if (projectsListApiError !=null) {
-    projectsRendering = (
-      <h1>Error while getting results. Please visit <a href="https://github.com/mejia-dev" target="_blank" rel="noreferrer">github.com/mejia-dev</a> to view current projects.</h1>
-    )
-  } else {
+  // if (!projectsListLoaded) {
+  //   projectsRendering = (
+  //     <h1>Loading, please wait...</h1>
+  //   )
+  // } else if (projectsListApiHasErrored === true) {
+  //   console.log(projectsListApiErrorMsg);
+  //   projectsRendering = (
+  //     <h1>Error while getting results. Please visit <a href="https://github.com/mejia-dev" target="_blank" rel="noreferrer">github.com/mejia-dev</a> to view current projects.</h1>
+  //   )
+  // } else 
+  if (projectsListLoaded && (projectsListApiHasErrored === false)) {
     projectsRendering = (
       <ProjectsList
         projectList={projectsList}
@@ -121,10 +125,7 @@ export default function Portfolio() {
           </p>
         </div>
       </div>
-
       {projectsRendering}
-      <h1>Test</h1>
-
     </React.Fragment>
   )
 }
