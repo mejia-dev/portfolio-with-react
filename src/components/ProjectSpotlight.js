@@ -12,15 +12,21 @@ export default function ProjectSpotlight(props) {
   let forksCount;
 
   useEffect(() => {
-    fetch("https://api.github.com/repos/mejia-dev/"+ props.title + "/branches")
+    fetch("https://api.github.com/repos/mejia-dev/"+ props.title + "/branches/gh-pages")
       .then(response => {
         if (!response.ok) {
           throw new Error(`Error: ${response.status}`);
         }
+        console.log(response);
         return response.json();
       })
       .then((jsonObj) => {
-        setGhPagesLink(jsonObj.response);
+        console.log("Made it here");
+        // jsonObj.response.forEach(element => {
+        //   console.log(element);
+        // });
+        // console.log(jsonObj.response);
+        setGhPagesLink("https://mejia-dev.github.io/"+ props.title);
         setGhPagesLinkLoaded(true);
       })
       .catch((error) => {
@@ -29,8 +35,11 @@ export default function ProjectSpotlight(props) {
       });
   }, [])
 
-  if (ghPagesLink !=null) {
-    pagesLink = <p className="pagesLink">GH Pages Link: <a href={props.linkPages}>{props.linkPages.slice(8)}</a></p>
+  if (ghPagesLink != null) {
+    // pagesLink = <p className="pagesLink">GH Pages Link: <a href={props.linkPages}>{props.linkPages.slice(8)}</a></p>
+    pagesLink = (
+      <p className="pagesLink">Live Link: <a href={ghPagesLink} target="_blank" rel="noreferrer">{ghPagesLink.slice(8)}</a></p>
+    )
   }
   if (props.stars >= 1) {
     starsCount = (
