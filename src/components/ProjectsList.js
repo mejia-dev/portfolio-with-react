@@ -8,13 +8,13 @@ export default function ProjectsList(props) {
       <div className="projectSpotlight-Wrapper">
         {Object.values(props.projectList).map((project, index) =>
           <ProjectSpotlight
-            title={project.title}
-            desc={project.desc}
-            linkRepo={project.linkRepo}
-            linkPages={project.linkPages}
-            techsUsed={project.techsUsed}
-            features={project.features}
-            coAuthors={project.coAuthors}
+            title={project.name}
+            desc={project.description}
+            linkRepo={project.repo}
+            // linkPages={project.linkPages}
+            // techsUsed={project.language}
+            // features={project.features}
+            // coAuthors={project.coAuthors}
             key={index}
           />
         )}

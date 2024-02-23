@@ -24,20 +24,20 @@ export default function ProjectSpotlight(props) {
     <div className="projectSpotlight-Project">
       <h2>{props.title}</h2>
       <p>{props.desc}</p>
-      <p className="repoLink">GitHub Link: <a href={props.linkRepo}>{props.linkRepo.slice(8)}</a></p>
+      <p className="repoLink">GitHub Link: <a href={props.linkRepo} target="_blank" rel="noreferrer">{props.linkRepo.slice(8)}</a></p>
       {pagesLink}
       <h3>Technologies Used:</h3>
-      <ol>
+      {/* <ol>
         {props.techsUsed.map((tech, index) =>
           <li key={props.title + tech + index}>{tech}</li>
         )}
-      </ol>
+      </ol> */}
       <h3>Features:</h3>
-      <ul>
+      {/* <ul>
         {props.features.map((feature, index) =>
           <li key={index}>{feature}</li>
         )}
-      </ul>
+      </ul> */}
       {coAuthorList}
     </div>
   )

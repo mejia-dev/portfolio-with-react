@@ -15,11 +15,11 @@ export default function Portfolio() {
     fetch("https://gh-pinned-repos-api.ysnirix.xyz/api/get?username=mejia-dev")
       .then(response => response.json())
       .then((jsonObj) => {
-        setProjectsList(jsonObj.results);
+        setProjectsList(jsonObj.response);
         setProjectsListLoaded(true);
-        })
+      })
       .catch((error) => {
-        setProjectsListApiError(error)
+        setProjectsListApiError(error);
         setProjectsListLoaded(true);
       });
   }, [])
@@ -74,12 +74,20 @@ export default function Portfolio() {
   }
 
   let projectsRendering;
-  if (projectsListApiError){
+  if (!projectsListLoaded) {
+    projectsRendering = (
+      <h1>Loading, please wait...</h1>
+    )
+  } else if (projectsListApiError !=null) {
     projectsRendering = (
       <h1>Error while getting results. Please visit <a href="https://github.com/mejia-dev" target="_blank" rel="noreferrer">github.com/mejia-dev</a> to view current projects.</h1>
     )
-  } else if (!projectsListLoaded) {
-    <h1>Loading, please wait...</h1>
+  } else {
+    projectsRendering = (
+      <ProjectsList
+        projectList={projectsList}
+      />
+    )
   }
 
 
@@ -114,11 +122,9 @@ export default function Portfolio() {
         </div>
       </div>
 
-      {/* <ProjectsList
-        projectList={projectsList}
-      /> */}
       {projectsRendering}
-      
+      <h1>Test</h1>
+
     </React.Fragment>
   )
 }
