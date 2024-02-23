@@ -155,3 +155,7 @@ body {
 a {
   color: #7180AC;
 }
+
+.apiMessage {
+  text-align: center;
+}
