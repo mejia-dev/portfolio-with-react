@@ -35,22 +35,16 @@ export default function ProjectSpotlight(props) {
       <p>{props.desc}</p>
       <p className="repoLink">GitHub Link: <a href={props.linkRepo} target="_blank" rel="noreferrer">{props.linkRepo.slice(8)}</a></p>
       {pagesLink}
-      {/* <h3>Primary Technology: </h3> */}
-      {/* <ol>
-        {Object.values(props.techsUsed).map((tech, color) =>
-          <li >{tech}</li>
-        )}
-      </ol> */}
-
-      {/* <h3>Details:</h3> */}
-      {/* <ul>
-        {props.features.map((feature, index) =>
-          <li key={index}>{feature}</li>
-        )}
-      </ul> */}
-      Technology: <span style={{color: `${props.techsUsed.color}`}}><svg height="100" width="100" xmlns="http://www.w3.org/2000/svg">
-  <circle r="45" cx="50" cy="50" fill={props.techsUsed.color} />
-</svg>{props.techsUsed.name}</span><br />
+      Technology: <span style={{
+        backgroundColor: `${props.techsUsed.color}`,
+        position: "relative",
+        top: "1px",
+        display: "inline-block",
+        width: "12px",
+        height: "12px",
+        borderRadius: "50%"
+      }}></span>
+      <span style={{color: `${props.techsUsed.color}`}}> {props.techsUsed.name}</span><br />
       {starsCount}<br />
       {forksCount}<br />
     </div>
