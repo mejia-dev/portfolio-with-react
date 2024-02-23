@@ -3,30 +3,50 @@ import PropTypes from 'prop-types';
 
 export default function ProjectSpotlight(props) {
 
-  const [ghPagesLinkLoaded, setGhPagesLinkLoaded] = useState(false);
+  // const [ghPagesLinkLoaded, setGhPagesLinkLoaded] = useState(false);
   const [ghPagesLink, setGhPagesLink] = useState(null);
+  const [forksCount, setForksCount] = useState(null);
   const [ghPagesLinkError, setGhPagesLinkError] = useState(null);
+  const [forksCountError, setForksCountError] = useState(null);
 
   let pagesLink;
   let starsCount;
-  let forksCount;
+  let forksDisplay;
 
   useEffect(() => {
-    fetch("https://api.github.com/repos/mejia-dev/"+ props.title + "/branches/gh-pages")
+    fetch("https://api.github.com/repos/mejia-dev/" + props.title + "/branches/gh-pages")
       .then(response => {
         if (!response.ok) {
           throw new Error(`Error: ${response.status}`);
         }
-        console.log(response);
         return response.json();
       })
       .then((jsonObj) => {
-        setGhPagesLink("https://mejia-dev.github.io/"+ props.title);
-        setGhPagesLinkLoaded(true);
+        setGhPagesLink("https://mejia-dev.github.io/" + props.title);
+        // setGhPagesLinkLoaded(true);
       })
       .catch((error) => {
         setGhPagesLinkError(error);
-        setGhPagesLinkLoaded(true);
+        // setGhPagesLinkLoaded(true);
+      });
+
+    fetch("https://api.github.com/repos/mejia-dev/" + props.title + "/forks")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((jsonObj) => {
+        console.log(jsonObj);
+        if (jsonObj.response.length >= 1)
+        {
+          console.log(props.title + "has forks")
+          setForksCount(jsonObj.response.length);
+        }
+      })
+      .catch((error) => {
+        setForksCountError(error.message);
       });
   }, [])
 
@@ -39,18 +59,18 @@ export default function ProjectSpotlight(props) {
     starsCount = (
       <span>Stars: ⭐{props.stars}</span>
     )
-      // <React.Fragment>
-      //   <h3>Co-Authors:</h3>
-      //   <ul>
-      //     {props.coAuthors.map((author, index) =>
-      //       <li key={index}><a href={author}>{author.slice(19)}</a></li>
-      //     )}
-      //   </ul>
-      // </React.Fragment>
+    // <React.Fragment>
+    //   <h3>Co-Authors:</h3>
+    //   <ul>
+    //     {props.coAuthors.map((author, index) =>
+    //       <li key={index}><a href={author}>{author.slice(19)}</a></li>
+    //     )}
+    //   </ul>
+    // </React.Fragment>
   }
-  if (props.forks >= 1) {
-    forksCount = (
-      <span>🍴 {props.forks}</span>
+  if (forksCount != null) {
+    forksDisplay = (
+      <span>Forks: {forksCount}</span>
     )
   }
 
@@ -69,9 +89,9 @@ export default function ProjectSpotlight(props) {
         height: "12px",
         borderRadius: "50%"
       }}></span>
-      <span style={{color: `${props.techsUsed.color}`}}> {props.techsUsed.name}</span><br />
+      <span style={{ color: `${props.techsUsed.color}` }}> {props.techsUsed.name}</span><br />
       {starsCount}<br />
-      {forksCount}<br />
+      {forksDisplay}<br />
     </div>
   )
 }
@@ -81,6 +101,6 @@ ProjectSpotlight.propTypes = {
   desc: PropTypes.string,
   linkRepo: PropTypes.string,
   techsUsed: PropTypes.object,
-  stars: PropTypes.number,
-  forks: PropTypes.number
+  stars: PropTypes.number
+  // forks: PropTypes.number
 }
