@@ -23,11 +23,9 @@ export default function ProjectSpotlight(props) {
       })
       .then((jsonObj) => {
         setGhPagesLink("https://mejia-dev.github.io/" + props.title);
-        // setGhPagesLinkLoaded(true);
       })
       .catch((error) => {
-        setGhPagesLinkError(error);
-        // setGhPagesLinkLoaded(true);
+        setGhPagesLinkError(error.message);
       });
 
     fetch("https://api.github.com/repos/mejia-dev/" + props.title + "/forks")
@@ -38,11 +36,9 @@ export default function ProjectSpotlight(props) {
         return response.json();
       })
       .then((jsonObj) => {
-        console.log(jsonObj);
-        if (jsonObj.response.length >= 1)
+        if (jsonObj.length >= 1)
         {
-          console.log(props.title + "has forks")
-          setForksCount(jsonObj.response.length);
+          setForksCount(jsonObj.length);
         }
       })
       .catch((error) => {
@@ -54,7 +50,12 @@ export default function ProjectSpotlight(props) {
     pagesLink = (
       <p className="pagesLink">Live Link: <a href={ghPagesLink} target="_blank" rel="noreferrer">{ghPagesLink.slice(8)}</a></p>
     )
+  } else if (ghPagesLink === null && ghPagesLinkError != null) {
+    pagesLink = (
+      <p className="pagesLink">Live Link: {ghPagesLinkError}</p>
+    )
   }
+
   if (props.stars >= 1) {
     starsCount = (
       <span>Stars: ⭐{props.stars}</span>
@@ -68,9 +69,14 @@ export default function ProjectSpotlight(props) {
     //   </ul>
     // </React.Fragment>
   }
+
   if (forksCount != null) {
     forksDisplay = (
       <span>Forks: {forksCount}</span>
+    )
+  } else if (forksCount === null && forksCountError != null) {
+    forksDisplay = (
+      <span>Forks: {forksCountError}</span>
     )
   }
 
