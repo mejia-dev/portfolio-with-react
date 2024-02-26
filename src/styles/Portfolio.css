@@ -135,7 +135,7 @@ body {
 }
 
 .projectSpotlight-Project {
-  outline: solid #7180AC;
+  /* outline: solid #7180AC; */
   color: #CDA985;
   float: left;
   width: 95%;

@@ -1,92 +1,110 @@
 import React, { useEffect, useState } from 'react';
+import { octokit } from './Octokit';
 import PropTypes from 'prop-types';
 
 export default function ProjectSpotlight(props) {
 
-  // const [ghPagesLinkLoaded, setGhPagesLinkLoaded] = useState(false);
   const [ghPagesLink, setGhPagesLink] = useState(null);
   const [forksCount, setForksCount] = useState(null);
   const [ghPagesLinkError, setGhPagesLinkError] = useState(null);
   const [forksCountError, setForksCountError] = useState(null);
 
-  let pagesLink;
-  let starsCount;
-  let forksDisplay;
-
   useEffect(() => {
-    fetch("https://api.github.com/repos/mejia-dev/" + props.title + "/branches/gh-pages")
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`Error: ${response.status}`);
+    async function getDeployments() {
+      await octokit.request(
+        'GET /repos/{owner}/{repo}/deployments', {
+        owner: 'mejia-dev',
+        repo: `${props.title}`,
+        headers: {
+          'X-GitHub-Api-Version': '2022-11-28'
         }
-        return response.json();
       })
-      .then((jsonObj) => {
-        setGhPagesLink("https://mejia-dev.github.io/" + props.title);
-      })
-      .catch((error) => {
-        setGhPagesLinkError(error.message);
-      });
+        .then(response => {
+          if (response.status === 200) {
+            if (response.data.length >= 1) {
+              setGhPagesLink("https://mejia-dev.github.io/" + props.title);
+            }
+          } else {
+            throw new Error(`Error: ${response.status}`);
+          }
+        })
+        .catch((error) => {
+          if (!error.message === 200) {
+            setGhPagesLinkError(error.message);
+          }
+        });
+    }
 
-    fetch("https://api.github.com/repos/mejia-dev/" + props.title + "/forks")
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`Error: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((jsonObj) => {
-        if (jsonObj.length >= 1)
-        {
-          setForksCount(jsonObj.length);
+    async function getForks() {
+      await octokit.request(
+        'GET /repos/{owner}/{repo}/forks', {
+        owner: 'mejia-dev',
+        repo: `${props.title}`,
+        headers: {
+          'X-GitHub-Api-Version': '2022-11-28'
         }
       })
-      .catch((error) => {
-        setForksCountError(error.message);
-      });
+        .then(response => {
+          if (response.status === 200) {
+            if (response.data.length >= 1) {
+              setForksCount(response.data.length);
+            }
+          } else {
+            throw new Error(`Error: ${response.status}`);
+          }
+        })
+        .catch((error) => {
+          if (!error.message === 200) {
+            setForksCountError(error.message);
+          }
+        });
+    }
+    getDeployments();
+    getForks();
   }, [])
 
+  let pagesLinkUI;
+  let starsCountUI;
+  let forksCountUI;
+
   if (ghPagesLink != null) {
-    pagesLink = (
-      <p className="pagesLink">Live Link: <a href={ghPagesLink} target="_blank" rel="noreferrer">{ghPagesLink.slice(8)}</a></p>
+    pagesLinkUI = (
+      <>
+      <p className="pagesLink"><em>Live Link:</em> <a href={ghPagesLink} target="_blank" rel="noreferrer">{ghPagesLink.slice(8)}</a></p>
+      <br />
+      </>
     )
   } else if (ghPagesLink === null && ghPagesLinkError != null) {
-    pagesLink = (
-      <p className="pagesLink">Live Link: {ghPagesLinkError}</p>
+    pagesLinkUI = (
+      <>
+      <p className="pagesLink"><em>Live Link:</em> {ghPagesLinkError}</p>
+      <br />
+      </>
+    )
+  }
+
+  if (forksCount != null) {
+    forksCountUI = (
+      <p><em>Forks:</em> {forksCount}</p>
+    )
+  } else if (forksCount === null && forksCountError != null) {
+    forksCountUI = (
+      <p><em>Forks:</em> {forksCountError}</p>
     )
   }
 
   if (props.stars >= 1) {
-    starsCount = (
-      <span>Stars: ⭐{props.stars}</span>
+    starsCountUI = (
+      <p><em>Stars:</em> ⭐{props.stars}</p>
     )
-    // <React.Fragment>
-    //   <h3>Co-Authors:</h3>
-    //   <ul>
-    //     {props.coAuthors.map((author, index) =>
-    //       <li key={index}><a href={author}>{author.slice(19)}</a></li>
-    //     )}
-    //   </ul>
-    // </React.Fragment>
   }
 
-  if (forksCount != null) {
-    forksDisplay = (
-      <span>Forks: {forksCount}</span>
-    )
-  } else if (forksCount === null && forksCountError != null) {
-    forksDisplay = (
-      <span>Forks: {forksCountError}</span>
-    )
-  }
+
 
   return (
     <div className="projectSpotlight-Project">
       <h2>{props.title}</h2>
-      <p>{props.desc}</p>
-      <p className="repoLink">GitHub Link: <a href={props.linkRepo} target="_blank" rel="noreferrer">{props.linkRepo.slice(8)}</a></p>
-      {pagesLink}
-      Technology: <span style={{
+      <em>Technology:</em> <span style={{
         backgroundColor: `${props.techsUsed.color}`,
         position: "relative",
         top: "1px",
@@ -96,8 +114,11 @@ export default function ProjectSpotlight(props) {
         borderRadius: "50%"
       }}></span>
       <span style={{ color: `${props.techsUsed.color}` }}> {props.techsUsed.name}</span><br />
-      {starsCount}<br />
-      {forksDisplay}<br />
+      <p><em>Description:</em> {props.desc}</p>
+
+      <p className="repoLink"><em>GitHub Link:</em> <a href={props.linkRepo} target="_blank" rel="noreferrer">{props.linkRepo.slice(8)}</a></p>
+      {starsCountUI}
+      {forksCountUI}
     </div>
   )
 }
@@ -108,5 +129,4 @@ ProjectSpotlight.propTypes = {
   linkRepo: PropTypes.string,
   techsUsed: PropTypes.object,
   stars: PropTypes.number
-  // forks: PropTypes.number
 }
